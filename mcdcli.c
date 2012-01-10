@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <string.h>
+#include <db.h>
 #include "mcddb.h"
 
 
@@ -17,7 +18,8 @@ int main(int argc, char **argv)
     char **keys, **values;
 
     if (argc < 2 || argc > 4) {
-        usage();
+        //usage();
+        puts("BLAH");
     }
 
     op = getopt(argc, argv, "a:d:f:g:l");
@@ -29,7 +31,7 @@ int main(int argc, char **argv)
     switch(op) {
         case 'a':
             if (argc == 4 && (optarg != NULL) &&
-                    (strnlen(optarg) >= 1) &&
+                    (strlen(optarg) >= 1) &&
                     (argv[optind] != NULL)) {
                 ret = add_rec(optarg, argv[optind]);
                 if (ret == 1) {
@@ -43,7 +45,8 @@ int main(int argc, char **argv)
                 break;
             }
             else {
-                usage();
+                //usage();
+                puts("BLAH");
             }
     }
 }

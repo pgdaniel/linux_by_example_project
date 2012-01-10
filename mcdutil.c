@@ -7,7 +7,7 @@ int mcd_getstr(char buf[], int len)
 {
     int c, i = 0;
 
-    while ((c = getchar()) ! = '\n' && i <len) {
+    while ((c = getchar()) != '\n' && i <len) {
         buf[i] = c;
         ++i;
     }

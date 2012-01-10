@@ -21,15 +21,17 @@ int open_db(char *dbpath)
     }
 
 
-    ret = db_open(dbpath, DB_BTREE, DB_CREATE, 0600, NULL, NULL, &db);
+    ret = open(dbpath, DB_BTREE, DB_CREATE, 0600, NULL, NULL, &db);
     if (ret != 0) {
         return ret;
     }
+    else
+        puts("OPEN");
 
     return 0;
 }
 
-int add_rec(chat *kbuf, char *vbuf)
+int add_rec(char *kbuf, char *vbuf)
 {
     DBT key, value;
     int ret;
@@ -43,7 +45,7 @@ int add_rec(chat *kbuf, char *vbuf)
     value.size = strlen(vbuf);
 
     ret = db->put(db, NULL, &key, &value, DB_NOOVERWRITE);
-    if (ret == DB_KEYEXISTS)
+    if (ret == DB_KEYEXIST)
         return 1;
 
     else if (ret != 0)
@@ -82,7 +84,7 @@ int find_rec(char *kbuf, DBT *value)
     DBT key;
     DBC *dbc = NULL;
 
-    ret = db->cursor(db, NULL, &dbc);
+    ret = db->cursor(db, NULL, &dbc, 0);
     if (ret != 0)
         return ret;
 
@@ -134,9 +136,9 @@ int count_recs(void)
 {
     int ret, cnt = 0;
     DBT key, value;
-    DBC *dbc = NULL:
+    DBC *dbc = NULL;
 
-    ret = db->cursor(db, NULL, &dbc);
+    ret = db->cursor(db, NULL, &dbc, 0);
     if (ret != 0)
         return ret;
 
@@ -155,7 +157,7 @@ int list_recs(char **keys, char **values)
     DBT key, value;
     DBC *dbc = NULL;
 
-    ret = db->cursor(db, NULL, &dbc);
+    ret = db->cursor(db, NULL, &dbc, 0);
     
     if (ret != 0) {
 
