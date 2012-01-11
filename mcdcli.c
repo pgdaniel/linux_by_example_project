@@ -42,6 +42,10 @@ int main(int argc, char **argv)
                     perror("mcdcli.c: add_rec");
                     exit(EXIT_FAILURE);
                 }
+                else if (ret > 0) {
+                    printf("%i\n", ret);
+                    perror("mcdcli.c: add_rec");
+                }
                 break;
             }
             else {

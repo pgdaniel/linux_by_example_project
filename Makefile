@@ -3,7 +3,7 @@ STD=	_GNU_SOURCE
 WARN=	-Wall
 
 .c.o:
-	$(CC) -c $(CFLAGS) -D$(STD) $(WARN) $<
+	$(CC) -c $(CFLAGS) -g -D$(STD) -ldb $(WARN) $<
 
 all:   mcdcli 
 

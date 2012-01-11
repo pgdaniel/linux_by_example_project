@@ -21,13 +21,11 @@ int open_db(char *dbpath)
     }
 
 
-    ret = open(dbpath, DB_BTREE, DB_CREATE, 0600, NULL, NULL, &db);
-    if (ret != 0) {
-        return ret;
-    }
-    else
-        puts("OPEN");
-
+        ret = db_create(&db, NULL, 0);
+        ret = db->open(db, NULL, dbpath, NULL, DB_BTREE, DB_CREATE, 0664);
+        if (ret != 0) {
+            return ret;
+        }
     return 0;
 }
 
@@ -48,8 +46,10 @@ int add_rec(char *kbuf, char *vbuf)
     if (ret == DB_KEYEXIST)
         return 1;
 
-    else if (ret != 0)
+    else if (ret != 0) {
+        perror("test");
         return ret;
+    }
 
     db->sync(db, 0);
 
